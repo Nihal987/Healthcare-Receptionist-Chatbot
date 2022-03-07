@@ -1,0 +1,10 @@
+.vscode/
+.__pycache__/
+.ipynb_checkpoints/
+atis_model/
+
+.DS_Store
+cached*
+ngrok
+private_key.json
+test.ipynb
