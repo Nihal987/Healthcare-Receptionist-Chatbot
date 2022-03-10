@@ -9,6 +9,7 @@ import pytz
 from dialogflow import get_response
 from utils import extract_details
 from display_data import show_appointment_details, list_doctors
+from email_test import send_email
 
 def bot_speak(bot_text):
     print("Bot text: ",bot_text)
@@ -30,7 +31,9 @@ def main():
         elif response.query_result.intent.display_name == 'appointment.book.list':
             bot_speak(response.query_result.fulfillment_text)
             list_doctors(str(response.query_result))
-            
+        elif response.query_result.intent.display_name == 'appointment.confirm.yes':
+            send_email()
+            bot_speak(response.query_result.fulfillment_text)
         else:
             bot_speak(response.query_result.fulfillment_text)
 

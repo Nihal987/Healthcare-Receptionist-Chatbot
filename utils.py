@@ -44,7 +44,7 @@ def extract_details(text):
     text = text.split("|")
     response_text = text[0]
     details_text = text[1]
-    DETAILS.update(zip(DETAILS,details_text.split()))
+    DETAILS.update(zip(DETAILS,details_text.split(',')))
     return response_text,DETAILS
 
 def extract_type(text):

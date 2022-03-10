@@ -7,7 +7,7 @@ os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = 'private_key.json'
 
 DIALOGFLOW_PROJECT_ID = 'receptionist-djjv'
 DIALOGFLOW_LANGUAGE_CODE = 'en'
-SESSION_ID = 'new'
+SESSION_ID = 'me'
 
 # text_to_be_analyzed = "I want to book an appointment at 3 PM today"
 
