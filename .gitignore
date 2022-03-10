@@ -12,5 +12,4 @@ sendgrid.env
 permissions.py
 doclist.xlsx
 ~$doclist.xlsx
-Doctor_database.xlsx
 ~$Doctor_database.xlsx
