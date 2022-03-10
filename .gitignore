@@ -7,4 +7,10 @@ atis_model/
 cached*
 ngrok
 private_key.json
-test.ipynb
+test.ipynbsendgrid.env
+sendgrid.env
+permissions.py
+doclist.xlsx
+~$doclist.xlsx
+Doctor_database.xlsx
+~$Doctor_database.xlsx

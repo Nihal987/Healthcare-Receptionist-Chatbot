@@ -1,4 +1,16 @@
 import re
+import pandas as pd
+
+DETAILS = {
+    "name":None,
+    "email": None,
+    "doctor": None,
+    "date": None,
+    "time": None,
+    "appointment": None
+}
+
+DATABASE = pd.read_excel('Doctor_database.xlsx')
 
 def extract_value(response):
     '''
@@ -24,3 +36,21 @@ def extract_value(response):
         text_to_parse = text_to_parse[text_to_parse.find(value)+len(value):]
     
     return d
+
+def extract_details(text):
+    '''
+    Function to extract the details frmo from the text response I sent
+    '''
+    text = text.split("|")
+    response_text = text[0]
+    details_text = text[1]
+    DETAILS.update(zip(DETAILS,details_text.split()))
+    return response_text,DETAILS
+
+def extract_type(text):
+    value_pattern = "string_value: \"(.*?)\"" # Starting pattern of each value to be extracted
+    type = re.search(value_pattern, text).group(1)
+    return type
+
+
+    
