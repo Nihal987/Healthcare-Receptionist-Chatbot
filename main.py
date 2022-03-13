@@ -35,6 +35,7 @@ def main():
             bot_text,details = extract_details(response.query_result.fulfillment_text)
             bot_speak(bot_text)
             show_appointment_details(details)
+            bot_speak('Are the above details correct?')
         elif response.query_result.intent.display_name == 'appointment.book.list':
             bot_speak(response.query_result.fulfillment_text)
             list_doctors(str(response.query_result))

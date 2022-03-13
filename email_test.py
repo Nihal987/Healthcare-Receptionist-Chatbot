@@ -3,7 +3,7 @@ from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 from permissions import set_api_key
 from utils import DETAILS
-from display_data import get_date,get_time
+from display_data import get_date
 
 def send_email():
     set_api_key() # This line just adds the SENDGRID_API_KEY environment variable, I didn't want to permanently set this
