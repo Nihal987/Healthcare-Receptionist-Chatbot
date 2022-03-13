@@ -11,14 +11,6 @@ def get_date(date_text):
     # day = date[2]
     return date
 
-def get_time(time_text):
-    # Extracting the time data
-    time = time_text
-    if len(time)>10:
-        time = time.split('T')[1]
-        time = time.split('-')[0]
-    return time
-
 def show_appointment_details(details):
     
     # Printing the details of the appointment

@@ -33,9 +33,6 @@ def main():
             the first tow words of the response to tell when the loop is done, all the slots are filled.
             """ 
             bot_text,details = extract_details(response.query_result.fulfillment_text)
-            print("************")
-            print(details)
-            print("************")
             bot_speak(bot_text)
             show_appointment_details(details)
         elif response.query_result.intent.display_name == 'appointment.book.list':

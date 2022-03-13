@@ -92,7 +92,7 @@ def create_event(details):
         }
     ).execute()
 
-    print("created event")
+    print("Added to Calendar")
     print("id: ", event_result['id'])
     print("summary: ", event_result['summary'])
     print("starts at: ", event_result['start']['dateTime'])
