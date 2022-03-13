@@ -56,8 +56,20 @@ def get_events(num):
         start = event['start'].get('dateTime', event['start'].get('date'))
         print(start, event['summary'])
 
-def create_event():
+def create_event(details):
     service = authenticate_google()
+
+    # Extracting time data
+    date = details['date'].split('T')[0]
+    ti = details['time']
+
+    # temp = details['time']
+    # temp = temp.split('T')
+    # date = temp[0]
+    # ti=  temp[1]
+    # ti = ti.split('-')[0]
+    dt = date+" "+ti.strip()
+    d = datetime.strptime(dt, '%Y-%m-%d %H:%M:%S')
 
     # Formatting the event details
     d = datetime.now().date()
@@ -65,10 +77,16 @@ def create_event():
     start = tomorrow.isoformat()
     end = (tomorrow + timedelta(hours=1)).isoformat()
 
+    # Appointment details
+    summary = "Appointment Booked " + details['appointment']
+    doctor = details['doctor']
+    description = "Appointment with Dr "+ doctor
+
+    # Creating an appointment
     event_result = service.events().insert(calendarId='primary',
         body={
-            "summary": 'Appointment Booked',
-            "description": 'This is a tutorial example of automating google calendar with python',
+            "summary": summary,
+            "description": description,
             "start": {"dateTime": start, "timeZone": 'America/Toronto'},
             "end": {"dateTime": end, "timeZone": 'America/Toronto'},
         }
@@ -79,7 +97,4 @@ def create_event():
     print("summary: ", event_result['summary'])
     print("starts at: ", event_result['start']['dateTime'])
     print("ends at: ", event_result['end']['dateTime'])
-
-
-
-create_event()
+    print("\n")

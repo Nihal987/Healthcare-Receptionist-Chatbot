@@ -66,7 +66,7 @@ def send_email():
         </body>
         </html>
         """.format(name=DETAILS['name'],doctor=DETAILS['doctor'],
-        type=DETAILS['appointment'],date=get_date(DETAILS['date']),time=get_time(DETAILS['time'])))
+        type=DETAILS['appointment'],date=get_date(DETAILS['date']),time=DETAILS['time']))
 
     try:
         sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))

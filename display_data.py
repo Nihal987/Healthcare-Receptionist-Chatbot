@@ -14,9 +14,10 @@ def get_date(date_text):
 def get_time(time_text):
     # Extracting the time data
     time = time_text
-    time = time.split('T')[1]
-    time = time.split('-')[0]
-    return time[:-3]
+    if len(time)>10:
+        time = time.split('T')[1]
+        time = time.split('-')[0]
+    return time
 
 def show_appointment_details(details):
     
@@ -27,7 +28,7 @@ def show_appointment_details(details):
     print(f"SPECIALIST TYPE: {details['appointment']}")
     print(f"DOCTOR: {details['doctor']}")
     print(f"DATE: {get_date(details['date'])}")
-    print(f"TIME: {get_time(details['time'])}\n")
+    print(f"TIME: {details['time']}\n")
 
 def list_doctors(sentence):
     type = extract_type(sentence)

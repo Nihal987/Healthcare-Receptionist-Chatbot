@@ -37,14 +37,21 @@ def extract_value(response):
     
     return d
 
+def format_time(time):
+    if len(time)>10:
+        time = time.split('T')[1]
+        time = time.split('-')[0]
+    return time
+
 def extract_details(text):
     '''
-    Function to extract the details frmo from the text response I sent
+    Function to extract the details from the text response I sent
     '''
     text = text.split("|")
     response_text = text[0]
-    details_text = text[1]
+    details_text = text[1]    
     DETAILS.update(zip(DETAILS,details_text.split(',')))
+    DETAILS['time'] = format_time(DETAILS['time'])
     return response_text,DETAILS
 
 def extract_type(text):
