@@ -9,6 +9,7 @@ import pytz
 from dialogflow import get_response
 from utils import extract_details
 from display_data import show_appointment_details, list_doctors
+from Handle_calendar import create_event
 from email_test import send_email
 
 def bot_speak(bot_text):
@@ -32,6 +33,9 @@ def main():
             the first tow words of the response to tell when the loop is done, all the slots are filled.
             """ 
             bot_text,details = extract_details(response.query_result.fulfillment_text)
+            print("************")
+            print(details)
+            print("************")
             bot_speak(bot_text)
             show_appointment_details(details)
         elif response.query_result.intent.display_name == 'appointment.book.list':
@@ -40,8 +44,9 @@ def main():
         elif response.query_result.intent.display_name == 'appointment.confirm.yes':
             send_email()
             bot_speak(response.query_result.fulfillment_text)
-        # elif response.query_result.intent.display_name == 'appointment.calendar.yes':
-        #     pass
+        elif response.query_result.intent.display_name == 'appointment.calendar.yes':
+            create_event(details)
+            bot_speak(response.query_result.fulfillment_text)
         else:
             bot_speak(response.query_result.fulfillment_text)
 
