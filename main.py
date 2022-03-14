@@ -45,6 +45,10 @@ def main():
         elif response.query_result.intent.display_name == 'appointment.calendar.yes':
             create_event(details)
             bot_speak(response.query_result.fulfillment_text)
+        elif response.query_result.intent.display_name == 'appointment.calendar.yes - no' or\
+         response.query_result.intent.display_name == 'appointment.calendar.no - no':
+            user_text = "end"
+            bot_speak(response.query_result.fulfillment_text)
         else:
             bot_speak(response.query_result.fulfillment_text)
 
