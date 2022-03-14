@@ -25,5 +25,5 @@ def show_appointment_details(details):
 def list_doctors(sentence):
     type = extract_type(sentence)
     print("\n")
-    print(DATABASE[DATABASE['Specialization'] == type].head())
+    print(DATABASE[DATABASE['Specialization'] == type].head(9))
     print("\n")

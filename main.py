@@ -3,9 +3,9 @@ import os.path
 import time
 import datetime
 from urllib import response
-# import pyttsx3
+# import playsound
 import speech_recognition as sr
-import pytz
+# import pyttsx3
 from dialogflow import get_response
 from utils import extract_details
 from display_data import show_appointment_details, list_doctors

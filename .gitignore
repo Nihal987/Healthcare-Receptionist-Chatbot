@@ -1,7 +1,6 @@
 .vscode/
 __pycache__/
 .ipynb_checkpoints/
-atis_model/
 
 .DS_Store
 cached*
@@ -10,8 +9,7 @@ private_key.json
 test.ipynbsendgrid.env
 sendgrid.env
 permissions.py
-doclist.xlsx
-~$doclist.xlsx
-~$Doctor_database.xlsxcredentials.json
+~$Doctor_database.xlsx
+Doctor_database.xlsx
 credentials.json
 token.json
