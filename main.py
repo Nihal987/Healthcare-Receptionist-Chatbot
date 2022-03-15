@@ -16,6 +16,8 @@ def bot_speak(bot_text,audio=True):
     print("Bot text: ",bot_text)
     if audio:
         engine = pyttsx3.init()
+        voices = engine.getProperty('voices')
+        engine.setProperty('voice', voices[7].id)
         engine.say(bot_text)
         engine.runAndWait()
 
