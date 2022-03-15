@@ -17,26 +17,55 @@ from email_test import send_email
 def bot_speak(bot_text,audio=True):
     print("Bot text: ",bot_text)
     if audio:
+        '''I'm using gTTS to generate Text-to-Speech.
+        Uncomment the below lines to make it run without internet'''
         # engine = pyttsx3.init(driverName='nsss')
         # voices = engine.getProperty('voices')
         # engine.setProperty('voice', voices[0].id)
         # engine.say(bot_text)
         # engine.runAndWait()
+
+        #Comment these lines and uncomment above lines to make it run without internet
         tts = gTTS(bot_text,lang='en')
         audio_file = 'voice.mp3'
         tts.save(audio_file)
+        time.sleep(1)
         playsound.playsound(audio_file)
+
+def user_input(mic=True):
+    '''Function to obtain the user input either via
+    the microphone or via the keyboard'''
+    if mic:
+        
+        print("User text: ")
+        r = sr.Recognizer()
+        with sr.Microphone() as source:                # use the default microphone as the audio source
+            audio = r.listen(source)                   # listen for the first phrase and extract it into audio data
+            user_text = ""
+        try:
+            user_text = r.recognize_google(audio)
+            print(user_text)
+        except Exception as e:
+            print("Exception: "+str(e))
+    else:
+        user_text = input("User text: ")
+    return user_text
 
 def main():
 
     bot_text = "Something"
     user_text = "Something"
+    mic = True
+
     while user_text!="end":
-        user_text = input("User: ") # Input from the user
+        
+        user_text = user_input(mic)                        # Input from the user
         if user_text=="end":
             break
+        
         response = get_response(user_text)
         temp_text = response.query_result.fulfillment_text
+        
         if len(temp_text)>10 and (temp_text[:9] == "Thank you" or temp_text[:10]=="Sure thing"):
             """
             Here I am using the first two words of the response to detect the intent,
@@ -48,21 +77,30 @@ def main():
             bot_speak(bot_text)
             show_appointment_details(details)
             bot_speak('Are the above details correct?')
+            mic = True
+        elif response.query_result.intent.display_name == 'appointment.book.slot':
+            bot_speak(response.query_result.fulfillment_text)
+            mic = False
         elif response.query_result.intent.display_name == 'appointment.book.list':
             bot_speak(response.query_result.fulfillment_text)
             list_doctors(str(response.query_result))
+            mic = True
         elif response.query_result.intent.display_name == 'appointment.confirm.yes':
             send_email()
             bot_speak(response.query_result.fulfillment_text)
+            mic = True
         elif response.query_result.intent.display_name == 'appointment.calendar.yes':
             create_event(details)
             bot_speak(response.query_result.fulfillment_text)
+            mic = True
         elif response.query_result.intent.display_name == 'appointment.calendar.yes - no' or\
          response.query_result.intent.display_name == 'appointment.calendar.no - no':
             user_text = "end"
             bot_speak(response.query_result.fulfillment_text)
+            mic = True
         else:
             bot_speak(response.query_result.fulfillment_text)
+            mic = True
 
 if __name__ == "__main__":
     main()
