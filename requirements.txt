@@ -1,4 +1,5 @@
 Flask==2.0.1
+pip install gTTS
 SpeechRecognition==3.8.1
 google-api-core==1.31.5
 google-api-python-client==2.36.0

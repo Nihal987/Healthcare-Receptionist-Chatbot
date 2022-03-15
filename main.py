@@ -6,6 +6,8 @@ from urllib import response
 # import playsound
 import speech_recognition as sr
 import pyttsx3
+from gtts import gTTS
+import playsound
 from dialogflow import get_response
 from utils import extract_details
 from display_data import show_appointment_details, list_doctors
@@ -15,11 +17,15 @@ from email_test import send_email
 def bot_speak(bot_text,audio=True):
     print("Bot text: ",bot_text)
     if audio:
-        engine = pyttsx3.init()
-        voices = engine.getProperty('voices')
-        engine.setProperty('voice', voices[7].id)
-        engine.say(bot_text)
-        engine.runAndWait()
+        # engine = pyttsx3.init(driverName='nsss')
+        # voices = engine.getProperty('voices')
+        # engine.setProperty('voice', voices[0].id)
+        # engine.say(bot_text)
+        # engine.runAndWait()
+        tts = gTTS(bot_text,lang='en')
+        audio_file = 'voice.mp3'
+        tts.save(audio_file)
+        playsound.playsound(audio_file)
 
 def main():
 
