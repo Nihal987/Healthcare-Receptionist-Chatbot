@@ -5,15 +5,19 @@ import datetime
 from urllib import response
 # import playsound
 import speech_recognition as sr
-# import pyttsx3
+import pyttsx3
 from dialogflow import get_response
 from utils import extract_details
 from display_data import show_appointment_details, list_doctors
 from Handle_calendar import create_event
 from email_test import send_email
 
-def bot_speak(bot_text):
+def bot_speak(bot_text,audio=True):
     print("Bot text: ",bot_text)
+    if audio:
+        engine = pyttsx3.init()
+        engine.say(bot_text)
+        engine.runAndWait()
 
 def main():
 
