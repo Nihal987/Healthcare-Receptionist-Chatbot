@@ -61,22 +61,19 @@ def create_event(details):
 
     # Extracting time data
     date = details['date'].split('T')[0]
-    ti = details['time']
+    time_ = details['time']
 
     # temp = details['time']
     # temp = temp.split('T')
     # date = temp[0]
     # ti=  temp[1]
     # ti = ti.split('-')[0]
-    dt = date+" "+ti.strip()
-    d = datetime.strptime(dt, '%Y-%m-%d %H:%M:%S')
+    date_text = date+" "+time_.strip()
+    app_datetime = datetime.strptime(date_text, '%Y-%m-%d %H:%M:%S')
 
     # Formatting the event details
-    d = datetime.now().date()
-    tomorrow = datetime(d.year, d.month, d.day, 10)+timedelta(days=1)
-    start = tomorrow.isoformat()
-    end = (tomorrow + timedelta(hours=1)).isoformat()
-
+    start = app_datetime.isoformat()
+    end = (app_datetime + timedelta(hours=1)).isoformat()
     # Appointment details
     summary = "Appointment Booked " + details['appointment']
     doctor = details['doctor']
@@ -92,9 +89,3 @@ def create_event(details):
         }
     ).execute()
 
-    print("Added to Calendar")
-    print("id: ", event_result['id'])
-    print("summary: ", event_result['summary'])
-    print("starts at: ", event_result['start']['dateTime'])
-    print("ends at: ", event_result['end']['dateTime'])
-    print("\n")
