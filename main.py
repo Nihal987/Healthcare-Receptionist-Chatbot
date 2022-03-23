@@ -29,8 +29,9 @@ def bot_speak(bot_text,audio=True):
         tts = gTTS(bot_text,lang='en')
         audio_file = 'voice.mp3'
         tts.save(audio_file)
-        time.sleep(0.5)
+        time.sleep(0.75)
         playsound.playsound(audio_file)
+    
 
 def user_input(mic=True):
     '''Function to obtain the user input either via
@@ -47,7 +48,7 @@ def user_input(mic=True):
             user_text = r.recognize_google(audio)
             print(user_text)
         except Exception as e:
-            print("Exception: "+str(e))
+            user_text = "Yes"
     else:
         user_text = input("Enter text: ")
     return user_text

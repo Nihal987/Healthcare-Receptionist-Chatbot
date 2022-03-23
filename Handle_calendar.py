@@ -88,4 +88,5 @@ def create_event(details):
             "end": {"dateTime": end, "timeZone": 'America/Toronto'},
         }
     ).execute()
+    # print(event_result)
 temp = authenticate_google()
