@@ -36,9 +36,9 @@ def user_input(mic=True):
     '''Function to obtain the user input either via
     the microphone or via the keyboard'''
     if mic:
-        # voice_prompt = 'voice_prompt.mp3'
-        # playsound.playsound(voice_prompt)
         print("User text: ")
+        voice_prompt = 'voice_prompt.mp3'
+        playsound.playsound(voice_prompt)
         r = sr.Recognizer()
         with sr.Microphone() as source:                # use the default microphone as the audio source
             audio = r.listen(source)                   # listen for the first phrase and extract it into audio data
@@ -87,9 +87,12 @@ def main():
                 mic = False
             else:
                 mic = True
-        elif "email" in response_text:
-            mic = False
+        elif response.query_result.intent.display_name == 'appointment.book.details':
             bot_speak(response_text)
+            if "email" in response_text:
+                mic = False
+            else:
+                mic = True
         elif response.query_result.intent.display_name == 'appointment.book.list':
             bot_speak(response_text)
             list_doctors(str(response.query_result))
