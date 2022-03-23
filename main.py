@@ -29,14 +29,15 @@ def bot_speak(bot_text,audio=True):
         tts = gTTS(bot_text,lang='en')
         audio_file = 'voice.mp3'
         tts.save(audio_file)
-        time.sleep(1)
+        time.sleep(0.5)
         playsound.playsound(audio_file)
 
 def user_input(mic=True):
     '''Function to obtain the user input either via
     the microphone or via the keyboard'''
     if mic:
-        
+        # voice_prompt = 'voice_prompt.mp3'
+        # playsound.playsound(voice_prompt)
         print("User text: ")
         r = sr.Recognizer()
         with sr.Microphone() as source:                # use the default microphone as the audio source
@@ -48,59 +49,68 @@ def user_input(mic=True):
         except Exception as e:
             print("Exception: "+str(e))
     else:
-        user_text = input("User text: ")
+        user_text = input("Enter text: ")
     return user_text
 
 def main():
 
     bot_text = "Something"
-    user_text = "Something"
-    mic = True
+    user_text = "Hello"
+    mic = True                                          # If the user is using voice inputs or not
+    not_start = False
 
     while user_text!="end":
         
-        user_text = user_input(mic)                        # Input from the user
-        if user_text=="end":
-            break
+        # mic = False
+        if not_start:                                       # First utterance of the bot is the welcome message
+            user_text = user_input(mic)                        # Input from the user
+            if user_text=="end":
+                break
         
         response = get_response(user_text)
-        temp_text = response.query_result.fulfillment_text
-        
-        if len(temp_text)>10 and (temp_text[:9] == "Thank you" or temp_text[:10]=="Sure thing"):
+        response_text = response.query_result.fulfillment_text
+        if len(response_text)>10 and (response_text[:9] == "Thank you" or response_text[:10]=="Sure thing"):
             """
             Here I am using the first two words of the response to detect the intent,
             I am not using response.query_result.intent.display_name as this intent has slots.
             Because it has slots the intent keeps looping until all the slots are filled. I use
             the first tow words of the response to tell when the loop is done, all the slots are filled.
             """ 
-            bot_text,details = extract_details(response.query_result.fulfillment_text)
+            bot_text,details = extract_details(response_text)
             bot_speak(bot_text)
             show_appointment_details(details)
-            bot_speak('Are the above details correct?')
+            bot_speak('Here are your appointment details, is everything alright with you?')
             mic = True
         elif response.query_result.intent.display_name == 'appointment.book.slot':
-            bot_speak(response.query_result.fulfillment_text)
+            bot_speak(response_text)
+            if "slot" in response_text:
+                mic = False
+            else:
+                mic = True
+        elif "email" in response_text:
             mic = False
+            bot_speak(response_text)
         elif response.query_result.intent.display_name == 'appointment.book.list':
-            bot_speak(response.query_result.fulfillment_text)
+            bot_speak(response_text)
             list_doctors(str(response.query_result))
             mic = True
         elif response.query_result.intent.display_name == 'appointment.confirm.yes':
             send_email()
-            bot_speak(response.query_result.fulfillment_text)
+            bot_speak(response_text)
             mic = True
         elif response.query_result.intent.display_name == 'appointment.calendar.yes':
             create_event(details)
-            bot_speak(response.query_result.fulfillment_text)
+            bot_speak(response_text)
             mic = True
         elif response.query_result.intent.display_name == 'appointment.calendar.yes - no' or\
          response.query_result.intent.display_name == 'appointment.calendar.no - no':
             user_text = "end"
-            bot_speak(response.query_result.fulfillment_text)
+            bot_speak(response_text)
             mic = True
         else:
-            bot_speak(response.query_result.fulfillment_text)
+            bot_speak(response_text)
             mic = True
-
+        not_start = True
+        
 if __name__ == "__main__":
     main()
