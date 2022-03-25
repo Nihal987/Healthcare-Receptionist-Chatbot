@@ -13,6 +13,7 @@ from utils import extract_details
 from display_data import show_appointment_details, list_doctors
 from Handle_calendar import create_event
 from email_test import send_email
+from Google_nearby import get_nearby
 
 def bot_speak(bot_text,audio=True):
     print("Bot text: ",bot_text)
@@ -111,6 +112,13 @@ def main():
             user_text = "end"
             bot_speak(response_text)
             mic = True
+        elif response.query_result.intent.display_name == 'nearby.type':
+            text = response_text.split("|")
+            response_text = text[0]
+            bot_speak(response_text)
+            second_response = get_nearby(text[1].strip())
+            bot_speak(second_response)
+            user_text = "end"
         else:
             bot_speak(response_text)
             mic = True
