@@ -15,3 +15,7 @@ def create_appointment():
         'Time':DETAILS['time']}
     appointment = appointment.append(app,ignore_index=True)   
     appointment.to_excel('Appointment_database.xlsx',index=False)
+
+def show_appointments():
+    appointment = pd.read_excel('Appointment_database.xlsx')
+    print(appointment.head())

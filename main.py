@@ -14,7 +14,7 @@ from display_data import show_appointment_details, list_doctors
 from Handle_calendar import create_event
 from email_test import send_email
 from Google_nearby import get_nearby
-from Appointments import create_appointment
+from Appointments import create_appointment, show_appointments
 
 def bot_speak(bot_text,audio=True):
     print("Bot text: ",bot_text)
@@ -110,16 +110,20 @@ def main():
             bot_speak(response_text)
             mic = True
         elif response.query_result.intent.display_name == 'appointment.calendar.yes - no' or\
-         response.query_result.intent.display_name == 'appointment.calendar.no - no':
+         response.query_result.intent.display_name == 'appointment.calendar.no - no':   # No more action required from chatbot
             user_text = "end"
             bot_speak(response_text)
             mic = True
-        elif response.query_result.intent.display_name == 'nearby.type':
+        elif response.query_result.intent.display_name == 'nearby.type':    # Find close by pharmacies etc
             text = response_text.split("|")
             response_text = text[0]
             bot_speak(response_text)
             second_response = get_nearby(text[1].strip())
             bot_speak(second_response)
+            user_text = "end"
+        elif response.query_result.intent.display_name == 'appointment.show':   # Show all appointments
+            bot_speak(response_text)
+            show_appointments()
             user_text = "end"
         else:
             bot_speak(response_text)
