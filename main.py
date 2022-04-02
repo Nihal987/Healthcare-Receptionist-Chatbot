@@ -14,6 +14,7 @@ from display_data import show_appointment_details, list_doctors
 from Handle_calendar import create_event
 from email_test import send_email
 from Google_nearby import get_nearby
+from Appointments import create_appointment
 
 def bot_speak(bot_text,audio=True):
     print("Bot text: ",bot_text)
@@ -71,7 +72,7 @@ def main():
         
         response = get_response(user_text)
         response_text = response.query_result.fulfillment_text
-        if len(response_text)>10 and (response_text[:9] == "Thank you" or response_text[:10]=="Sure thing"):
+        if len(response_text)>10 and (response_text[:9] == "Thank you" or response_text[:10]=="Sure thing"):    # Display appointment details
             """
             Here I am using the first two words of the response to detect the intent,
             I am not using response.query_result.intent.display_name as this intent has slots.
@@ -89,21 +90,22 @@ def main():
                 mic = False
             else:
                 mic = True
-        elif response.query_result.intent.display_name == 'appointment.book.details':
+        elif response.query_result.intent.display_name == 'appointment.book.details':   # Type in the user details (typing in as the STT software can't get non western names and emails)
             bot_speak(response_text)
             if "email" in response_text:
                 mic = False
             else:
                 mic = True
-        elif response.query_result.intent.display_name == 'appointment.book.list':
+        elif response.query_result.intent.display_name == 'appointment.book.list':  # Display the list of doctors
             bot_speak(response_text)
             list_doctors(str(response.query_result))
             mic = True
-        elif response.query_result.intent.display_name == 'appointment.confirm.yes':
+        elif response.query_result.intent.display_name == 'appointment.confirm.yes':    # Confirm appointment details, create appointment
+            create_appointment()
             send_email()
             bot_speak(response_text)
             mic = True
-        elif response.query_result.intent.display_name == 'appointment.calendar.yes':
+        elif response.query_result.intent.display_name == 'appointment.calendar.yes':   # Add appointment to Google Calendar
             create_event(details)
             bot_speak(response_text)
             mic = True
