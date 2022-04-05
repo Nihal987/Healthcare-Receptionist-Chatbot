@@ -14,7 +14,7 @@ from display_data import show_appointment_details, list_doctors
 from Handle_calendar import create_event
 from email_test import send_email
 from Google_nearby import get_nearby
-from Appointments import create_appointment, show_appointments
+from Appointments import create_appointment, show_appointments, no_of_appointments, cancel_appointment
 
 def bot_speak(bot_text,audio=True):
     print("Bot text: ",bot_text)
@@ -125,6 +125,19 @@ def main():
             bot_speak(response_text)
             show_appointments()
             user_text = "end"
+        elif response.query_result.intent.display_name == 'appointment.cancel':   # Cancel an appointment
+            num = no_of_appointments()
+            if num == 0:
+                bot_speak("You currently don't have any appointments, so you have nothing to cancel")
+            elif num == 1:
+                cancel_appointment(0)
+                bot_speak("Your appointment has been cancelled")
+            else:
+                bot_speak("Type in the appointment number of the appointment you'd like to cancel")
+                num = int(input("Enter Text: "))
+                cancel_appointment(num-1)
+                bot_speak("That appointment is now cancelled")
+                user_text = "end"
         else:
             bot_speak(response_text)
             mic = True

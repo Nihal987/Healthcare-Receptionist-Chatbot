@@ -19,3 +19,12 @@ def create_appointment():
 def show_appointments():
     appointment = pd.read_excel('Appointment_database.xlsx')
     print(appointment.head())
+
+def no_of_appointments():
+    appointment = pd.read_excel('Appointment_database.xlsx')
+    return len(appointment)
+
+def cancel_appointment(id):
+    appointment = pd.read_excel('Appointment_database.xlsx')
+    appointment.drop(index=id,inplace=True)
+    appointment.to_excel('Appointment_database.xlsx',index=False)
