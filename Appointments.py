@@ -18,7 +18,9 @@ def create_appointment():
 
 def show_appointments():
     appointment = pd.read_excel('Appointment_database.xlsx')
+    print("\n")
     print(appointment.head())
+    print("\n")
 
 def no_of_appointments():
     appointment = pd.read_excel('Appointment_database.xlsx')

@@ -10,6 +10,7 @@ test.ipynbsendgrid.env
 sendgrid.env
 permissions.py
 ~$Doctor_database.xlsx
+~$Appointment_database.xlsx
 credentials.json
 token.json
 voice.mp3

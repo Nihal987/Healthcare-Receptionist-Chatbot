@@ -48,5 +48,5 @@ def get_nearby(type_ ):
     print(data.head())
     print("\n")
 
-    return f"Here are the {type_} near you, let me know if you need anything else  bye"
+    return f"Here are the {type_} near you, let me know if you need anything else. Bye"
 

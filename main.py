@@ -134,9 +134,11 @@ def main():
                 bot_speak("Your appointment has been cancelled")
             else:
                 bot_speak("Type in the appointment number of the appointment you'd like to cancel")
+                show_appointments()
                 num = int(input("Enter Text: "))
-                cancel_appointment(num-1)
-                bot_speak("That appointment is now cancelled")
+                cancel_appointment(num)
+                bot_speak("That appointment is now cancelled. Here's your remaining appointments")
+                show_appointments()
                 user_text = "end"
         else:
             bot_speak(response_text)
