@@ -11,6 +11,8 @@ sendgrid.env
 permissions.py
 ~$Doctor_database.xlsx
 ~$Appointment_database.xlsx
+~$Project Presentation.pptx
+Project Presentation.pptx
 credentials.json
 token.json
 voice.mp3
