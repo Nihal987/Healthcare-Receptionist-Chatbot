@@ -12,4 +12,4 @@ Google Maps and Calendar API access must also be granted from your respective Go
 1. [Google Calendar](https://developers.google.com/calendar/api/quickstart/python)
 2. [Google Maps](https://developers.google.com/maps/documentation/places/web-service/get-api-key)
 
-The DialogFlow Project is exported in a Zip file called 
+The DialogFlow Project is exported in a Zip file called [Receptionist.zip](Receptionist.zip)
